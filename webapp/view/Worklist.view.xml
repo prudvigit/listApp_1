@@ -1,0 +1,169 @@
+<mvc:View
+	controllerName="mycompany.myapp.MyWorklistApp.controller.Worklist"
+	height="100%" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns="sap.m" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:vm="sap.ui.comp.variants">
+
+<f:DynamicPage id="dynamicPageId" headerExpanded="{/headerExpanded}">
+		<!-- DynamicPage Title -->
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<vm:VariantManagement standardItemText="My Products"></vm:VariantManagement>
+				</f:heading>
+				<f:actions>
+					<ToolbarSpacer/>
+					<Button text="Global Action" type="Transparent"/>
+					<Button text="Toggle Footer" type="Transparent" press="onToggleFooter"/>
+					<Button icon="sap-icon://action" type="Transparent"/>
+				</f:actions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<!-- DynamicPage Header -->
+		<f:header>
+			<f:DynamicPageHeader pinnable="true">
+				<f:content>
+					<fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true">
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem id="idA" groupName="__$INTERNAL$" name="A" label="Delivery Date" partOfCurrentVariant="true" visibleInFilterBar="true">
+								<fb:control>
+									<DatePicker id="idDate"/>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem id="idB" groupName="__$INTERNAL$" name="B" label="Region" labelTooltip="Tooltip Example" mandatory="true"
+								partOfCurrentVariant="true" visibleInFilterBar="true">
+								<fb:control>
+									<ComboBox id="idCB">
+										<items>
+											<core:Item id="id1" key="001" text="EMEA"/>
+											<core:Item id="id2" key="002" text="America"/>
+											<core:Item id="id3" key="003" text="APJ"/>
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem id="idB2" groupName="__$INTERNAL$" name="C" label="Supplier" labelTooltip="Tooltip Example" mandatory="true"
+								partOfCurrentVariant="true" visibleInFilterBar="true">
+								<fb:control>
+									<ComboBox id="idCB2" items="{
+												path: 'supplier>/ProductSuppliers',
+												templateShareable: true
+											}">
+										<items>
+										<core:Item id="idCB3" key="{supplier>key}" text="{supplier>name}"/>
+										</items>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+						</fb:filterGroupItems>
+					</fb:FilterBar>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+
+	<f:content>
+					<Table
+						id="table"
+						busyIndicatorDelay="{worklistView>/tableBusyDelay}"
+						growing="true"
+						growingScrollToLoad="true"
+						noDataText="{worklistView>/tableNoDataText}"
+						updateFinished=".onUpdateFinished"
+						width="auto"
+						mode="MultiSelect"
+						items="{
+							path: '/Products',
+							sorter: {
+								path: 'ProductName',
+								descending: false
+							},
+							parameters: {
+								'expand': 'Supplier'
+							}
+						}">
+					<headerToolbar>
+						<Toolbar>
+							<Title
+								id="tableHeader"
+								text="{worklistView>/worklistTableTitle}"/>
+							<ToolbarSpacer/>
+							<SearchField
+								id="searchField"
+								tooltip="{i18n>worklistSearchTooltip}"
+								search=".onSearch"
+								width="auto">
+							</SearchField>
+						</Toolbar>
+					</headerToolbar>
+
+						<columns>
+							<Column id="nameColumn">
+								<Text
+									id="nameColumnTitle"
+									text="{i18n>TableNameColumnTitle}"/>
+							</Column>
+							<Column
+								id="supplierNameColumn"
+								demandPopin="false"
+								minScreenWidth="Tablet">
+								<Text text="{i18n>TableSupplierColumnTitle}"/>
+							</Column>
+							<Column
+								id="unitPriceColumn"
+								hAlign="End"
+								demandPopin="true"
+								minScreenWidth="Tablet">
+								<Text text="{i18n>TablePriceColumnTitle}"/>
+							</Column>
+							<Column id="unitsOnOrderColumn"
+								demandPopin="true"
+								minScreenWidth="Tablet"
+								hAlign="End">
+								<Text text="{i18n>TableUnitsOrderedColumnTitle}"/>
+							</Column>
+							<Column
+								id="unitsInStockColumn"
+								hAlign="End">
+								<Text text="{i18n>TableUnitsInStockColumnTitle}"/>
+							</Column>
+						</columns>
+					<items>
+						<ColumnListItem
+							type="Navigation"
+							press=".onPress">
+							<cells>
+								<ObjectIdentifier
+									title="{ProductName}"/>
+								<Text text = "{Supplier/CompanyName}"/>
+								<ObjectNumber
+									unit="EUR"
+									number="{
+										path: 'UnitPrice',
+										formatter: '.formatter.numberUnit'}"/>
+								<ObjectNumber
+									number="{
+										path: 'UnitsOnOrder',
+										formatter: '.formatter.numberUnit'}"
+										unit="PC"/>
+								<ObjectNumber
+									number="{
+										path: 'UnitsInStock',
+										formatter: '.formatter.numberUnit'}"
+									unit="PC"
+									state="{
+										path: 'UnitsInStock',
+										formatter: '.formatter.quantityState'}"/>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</f:content>
+			<f:footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button type="Accept" text="Accept"/>
+				<Button type="Reject" text="Reject"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>
