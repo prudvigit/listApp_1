@@ -83,6 +83,8 @@ sap.ui.define([
 				});
 				this._bindView("/" + sObjectPath);
 			}.bind(this));
+
+			this._fnCreateEditForm()
 		},
 
 		/**
@@ -166,7 +168,28 @@ sap.ui.define([
 			oFeedbackModel.setData({
 				productComments : aEntries
 			});
-		}
+		},
+		onTabChange: function(oEvent){
+
+		},
+
+		_fnCreateEditForm: function () {
+
+            this.byId("idTabCE").insertContent(this._getCreateEditForm());
+        },
+
+		_getCreateEditForm: function () {
+            if (!this._oCreateEditForm) {
+                this._oCreateEditForm = sap.ui.xmlfragment(this._getID(), "mycompany.myapp.MyWorklistApp.fragments.CreateEditForm",
+                    this);
+                this.getView().addDependent(this._oCreateEditForm);
+            }
+            return this._oCreateEditForm;
+        },
+
+		_getID: function () {
+            return this.createId("idForm");
+        }
 
 	});
 
