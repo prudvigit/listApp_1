@@ -117,7 +117,7 @@
         <OverflowToolbar id="otbFooter">
             <ToolbarSpacer />
             <Button text="Previous Employee Assignment" type="Emphasized" />
-            <Button text="Saveas Draft" type="Emphasized" />
+            <Button text="Save as Draft" type="Emphasized" />
         </OverflowToolbar>
     </VBox>
 </core:FragmentDefinition>

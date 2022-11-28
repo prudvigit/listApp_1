@@ -57,7 +57,7 @@
                         </form:SimpleForm> -->
                     </content>
                 </Panel>
-                <Panel backgroundDesign="Transparent" headerText="{i18n>ObjectCommentsTabTitle}">
+                <!-- <Panel backgroundDesign="Transparent" headerText="{i18n>ObjectCommentsTabTitle}">
                     <content>
                         <FeedInput post=".onPost" />
                         <List id="idCommentsList" noDataText="{i18n>ObjectCommentNoData}" showSeparators="Inner" items="{
@@ -70,11 +70,11 @@
                             <FeedListItem info="{productFeedback>type}" text="{productFeedback>comment}" timestamp="{productFeedback>date}" />
                         </List>
                     </content>
-                </Panel>
+                </Panel> -->
             </l:VerticalLayout>
         </semantic:content>
-        <semantic:sendEmailAction>
+        <!-- <semantic:sendEmailAction>
             <semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress" />
-        </semantic:sendEmailAction>
+        </semantic:sendEmailAction> -->
     </semantic:SemanticPage>
 </mvc:View>

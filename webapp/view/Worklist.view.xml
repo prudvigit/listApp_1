@@ -9,13 +9,13 @@
 		<f:title>
 			<f:DynamicPageTitle>
 				<f:heading>
-					<vm:VariantManagement standardItemText="My Products"></vm:VariantManagement>
+					<vm:VariantManagement standardItemText="Time Entry Template Maintenance"></vm:VariantManagement>
 				</f:heading>
 				<f:actions>
 					<ToolbarSpacer/>
-					<Button text="Global Action" type="Transparent"/>
-					<Button text="Toggle Footer" type="Transparent" press="onToggleFooter"/>
-					<Button icon="sap-icon://action" type="Transparent"/>
+					<Button text="Create Template" type="Transparent"/>
+					<Button text="Edit / Display Templates" type="Transparent" press="onToggleFooter"/>
+					<Button text="Copy Templates" type="Transparent"/>
 				</f:actions>
 			</f:DynamicPageTitle>
 		</f:title>
@@ -25,12 +25,12 @@
 				<f:content>
 					<fb:FilterBar id="filterbar" reset="onReset" search="onSearch" useToolbar="false" showGoOnFB="true">
 						<fb:filterGroupItems>
-							<fb:FilterGroupItem id="idA" groupName="__$INTERNAL$" name="A" label="Delivery Date" partOfCurrentVariant="true" visibleInFilterBar="true">
+							<!-- <fb:FilterGroupItem id="idA" groupName="__$INTERNAL$" name="A" label="Delivery Date" partOfCurrentVariant="true" visibleInFilterBar="true">
 								<fb:control>
 									<DatePicker id="idDate"/>
 								</fb:control>
-							</fb:FilterGroupItem>
-							<fb:FilterGroupItem id="idB" groupName="__$INTERNAL$" name="B" label="Region" labelTooltip="Tooltip Example" mandatory="true"
+							</fb:FilterGroupItem> -->
+							<fb:FilterGroupItem id="idB" groupName="__$INTERNAL$" name="B" label="Business Unit" labelTooltip="Tooltip Example" mandatory="true"
 								partOfCurrentVariant="true" visibleInFilterBar="true">
 								<fb:control>
 									<ComboBox id="idCB">
@@ -42,17 +42,18 @@
 									</ComboBox>
 								</fb:control>
 							</fb:FilterGroupItem>
-							<fb:FilterGroupItem id="idB2" groupName="__$INTERNAL$" name="C" label="Supplier" labelTooltip="Tooltip Example" mandatory="true"
+							<fb:FilterGroupItem id="idB2" groupName="__$INTERNAL$" name="C" label="Search Templates" labelTooltip="Tooltip Example" mandatory="true"
 								partOfCurrentVariant="true" visibleInFilterBar="true">
 								<fb:control>
-									<ComboBox id="idCB2" items="{
+								<Input/>
+									<!-- <ComboBox id="idCB2" items="{
 												path: 'supplier>/ProductSuppliers',
 												templateShareable: true
 											}">
 										<items>
 										<core:Item id="idCB3" key="{supplier>key}" text="{supplier>name}"/>
 										</items>
-									</ComboBox>
+									</ComboBox> -->
 								</fb:control>
 							</fb:FilterGroupItem>
 						</fb:filterGroupItems>
@@ -70,7 +71,7 @@
 						noDataText="{worklistView>/tableNoDataText}"
 						updateFinished=".onUpdateFinished"
 						width="auto"
-						mode="MultiSelect"
+						mode="SingleSelectLeft"
 						items="{
 							path: '/Products',
 							sorter: {
